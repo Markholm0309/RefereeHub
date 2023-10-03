@@ -1,0 +1,30 @@
+<div class="card flex justify-content-center">
+    <div class="grid-container">
+        <div class="grid-item">
+            <p-button 
+                icon="pi pi-bars"
+                styleClass="p-button-rounded p-button-outlined"
+                (click)="display = true">
+            </p-button>
+        </div>
+        <div class="grid-item">
+
+        </div>
+    </div>
+
+    <p-sidebar [(visible)]="display">
+        <ng-template pTemplate="header">Referee Hub</ng-template>
+        <ng-template pTemplate="content">
+            <li class="nav-link" routerLink='/' routerLinkActive='active'>
+                <a>Home</a>
+            </li>
+            <li class="nav-link" routerLink='/referees' routerLinkActive='active'>
+                <a>Referees</a>
+            </li>
+            <li class="nav-link" routerLink='/reports' routerLinkActive='active'>
+                <a>Reports</a>
+            </li>
+        </ng-template>
+        <ng-template pTemplate="footer">Svendeprøve 2023 <br>Mark Holm Justesen</ng-template>
+    </p-sidebar>
+</div>

@@ -1,0 +1,67 @@
+<p-table
+    #dte
+    *ngIf="!createMode"
+    [value]="events" 
+    [tableStyle]="{'min-width': '50rem', 'padding-top': '10px'}"
+    [globalFilterFields]="['timeStamp', 'description']"
+    dataKey="id"
+    editMode="row"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="applyFilter(dte, $event)" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Time stamp</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-event let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="event">
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="event.timeStamp">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{event.timeStamp}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="event.description">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{event.description}}                  
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(event)" class="p-button-rounded p-button-text"></button>
+                    <p-toast></p-toast>
+                    <p-confirmPopup></p-confirmPopup>
+                    <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-times" (click)="deleteEvent(event, $event, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(event)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(event, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                </div>
+            </td>
+        </tr>   
+    </ng-template>
+</p-table>
+
+<button *ngIf="!createMode" pButton pRipple type="button" icon="pi pi-plus" (click)="createMode = true" class="p-button-info p-button-text p-button-success"></button>
+<button *ngIf="createMode" pButton pRipple type="button" icon="pi pi-minus" (click)="createMode = false" class="p-button-info p-button-text p-button-danger"></button>
+
+<app-event-form *ngIf="createMode" (eventModel)="createNewEvent($event)"></app-event-form>

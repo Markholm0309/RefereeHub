@@ -1,0 +1,50 @@
+<div class="card">
+    <p-table
+        #dt
+        responsiveLayout="stack"
+        [breakpoint]="'960px'"
+        [value]="referees" 
+        [tableStyle]="{'min-width': '50rem'}"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="['fullName', 'currentLeague', 'rating']"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilter(dt, $event)" placeholder="Search keyword" />
+                </span>
+                <p-button label="New" (click)="createReferee()" icon="pi pi-user-plus" styleClass="p-button-info p-button-text"></p-button>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="text-align: center;">Name</th>
+                <th style="text-align: center;">Image</th>
+                <th style="text-align: center;">Current league</th>
+                <th style="text-align: center;">Reviews</th>
+                <th style="text-align: center;"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-referee let-columns="columns">
+            <tr>
+                <td style="text-align: center;">{{referee.fullName}}</td>
+                <td style="text-align: center;"><img [src]="referee.image" width="100" class="shadow-4" /></td>
+                <td style="text-align: center;">{{referee.currentLeague}}</td>
+                <td style="text-align: center;"><p-rating [ngModel]="referee.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td style="text-align: center;">
+                    <p-button icon="pi pi-id-card" styleClass="p-button-rounded p-button-outlined" routerLink="/referees/{{referee.fullName}}"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="Create new referee" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="true" [resizable]="false">
+        <app-referee-form [selectionType]="'create'" (stateEvent)="handleStateEvent($event)"></app-referee-form>
+    </p-dialog>
+</div>

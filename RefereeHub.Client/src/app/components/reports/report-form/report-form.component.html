@@ -1,0 +1,48 @@
+<p-card class="create-card">
+    <form (ngSubmit)="submitForm()">
+
+      <div *ngIf="!createMode" class="form-group">
+        <label htmlFor="title">Title</label>
+        <input type="text" pInputText [(ngModel)]="report.title" name="title"/>
+      </div>
+
+      <div *ngIf="!createMode" class="form-group">
+        <label htmlFor="referee">Referee</label>
+        <div class="card flex justify-content-center">
+          <p-dropdown [options]="referees" [(ngModel)]="report.referee" name="referee"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div *ngIf="!createMode">
+          <label htmlFor="events">Events</label>
+          <p  *ngFor="let event of report.events">
+            {{event.timeStamp}}
+            {{event.description}}
+          </p>
+        </div>
+
+        <div *ngIf="createMode" class="form-group">
+          <label htmlFor="timeStamp">Time stamp</label>
+          <input type="text" pInputText [(ngModel)]="tempEvent.timeStamp" name="timeStamp"/>
+        </div>
+
+        <div *ngIf="createMode" class="form-group">
+          <label htmlFor="description">description</label>
+          <input type="text" pInputText [(ngModel)]="tempEvent.description" name="description"/>
+        </div>
+
+        <button *ngIf="!createMode" pButton pRipple type="button" icon="pi pi-plus" (click)="createMode = true" class="p-button-info p-button-text p-button-success"></button>
+        <button *ngIf="createMode" pButton pRipple type="button" icon="pi pi-minus" (click)="createMode = false" class="p-button-info p-button-text p-button-danger"></button>
+      </div>
+
+      <div *ngIf="!createMode" class="form-group">
+        <label htmlFor="rating">Rating</label>
+        <p-rating [(ngModel)]="report.rating" [readonly]="false" [cancel]="false" name="rating"></p-rating>
+      </div>
+
+      <p-button *ngIf="!createMode" label="Submit" type="submit" icon="pi pi-check"></p-button>
+      <p-button *ngIf="createMode" label="Submit" (click)="addNewEvent(tempEvent)" icon="pi pi-check"></p-button>
+    </form>
+</p-card>
+  

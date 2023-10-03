@@ -1,0 +1,8 @@
+<div class="card">
+    <p-card header="Advanced Card" subheader="Card Subheader" [style]="{ width: '360px' }">
+        <input type="text" pInputText [(ngModel)]="model.username" />
+        <p-password [(ngModel)]="model.password" [toggleMask]="true"></p-password>
+    </p-card>
+
+    Model: {{model.username}} - {{model.password}}
+</div>

@@ -1,0 +1,36 @@
+.parent {
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin: 5rem;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 2; flex: 1 1 100%; }
+.div2 { grid-area: 1 / 2 / 2 / 3; flex: 1 1 100%; }
+
+.delete-btn {
+    margin-left: 1%;
+}
+
+@media (min-width: 768px) {
+    .div1 {
+        flex: 0 0 360px;
+    }
+
+    .div2 {
+        flex: 1 1 calc(100% - 360px);
+    }
+}
+
+@media (min-width: 960px) {
+    .div2 {
+        flex: 1 1 calc(100% - 400px);
+    }
+}
+
+img {
+    border-radius: 50% ;
+}

@@ -1,0 +1,78 @@
+<div class="card">
+    <p-table
+        #dt
+        responsiveLayout="stack"
+        [breakpoint]="'960px'"
+        [value]="reports" 
+        [tableStyle]="{'min-width': '50rem'}"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="['title', 'timeCreated', 'referee', 'rating']"
+    >
+
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilter(dt, $event)" placeholder="Search keyword" />
+                </span>
+                <p-button label="New" (click)="createReport()" icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="text-align: center;">Title</th>
+                <th style="text-align: center;">Time created</th>
+                <th style="text-align: center;">Referee</th>
+                <th style="text-align: center;">Rating</th>
+                <th style="text-align: center;"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report let-columns="columns">
+            <tr>
+                <td style="text-align: center;">
+                    {{report.title}}
+                </td>
+
+                <td style="text-align: center;">
+                    {{report.timeCreated | date: 'dd/MM/yyyy'}}                  
+                </td>
+
+                <td style="text-align: center;">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="report.referee">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <img alt="Card" src="{{getAvatar(report.referee)}}" title="{{report.referee}}"/>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td style="text-align: center;">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-rating [ngModel]="report.rating" [readonly]="false" [cancel]="false"></p-rating>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <p-rating [ngModel]="report.rating" [readonly]="true" [cancel]="false"></p-rating>                        
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                
+                <td style="text-align: center;">
+                    <button routerLink="/referees/{{report.referee}}" pButton pRipple type="button" icon="pi pi-id-card" class="p-button-rounded p-button-text"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="Create new report" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="true" [resizable]="false">
+        <app-report-form (stateEvent)="handleStateEvent($event)"></app-report-form>
+    </p-dialog>
+</div>

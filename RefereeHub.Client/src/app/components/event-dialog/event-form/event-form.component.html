@@ -1,0 +1,13 @@
+<p-card class="create-card">
+    <form (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label htmlFor="timeStamp">Time stamp</label>
+            <input [(ngModel)]="event.timeStamp" type="text" pInputText name="timeStamp"/>
+        </div>
+        <div class="form-group">
+            <label htmlFor="description">Description</label>
+            <input [(ngModel)]="event.description" type="text" pInputText name="description"/>
+        </div>
+        <p-button label="Submit" type="submit" icon="pi pi-check"></p-button>
+    </form>
+</p-card>

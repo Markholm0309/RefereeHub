@@ -1,0 +1,20 @@
+<div class="parent">
+    <div class="div1">
+        <div class="card">
+            <p class="title">Registered referees</p>
+            <p class="content">{{registeredReferees}}</p>
+        </div>
+    </div>
+    <div class="div2">
+        <div class="card">
+            <p class="title">Average referee rating</p>
+            <div><p-rating [ngModel]="averageRating" [readonly]="true" [cancel]="false"></p-rating></div>
+        </div>
+    </div>
+    <div class="div3">
+        <div class="card">
+            <p class="title">Total of reports</p>
+            <p class="content">{{totalOfReports}}</p>
+        </div>
+    </div>
+</div>
